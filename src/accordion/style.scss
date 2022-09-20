@@ -1,0 +1,75 @@
+/*
+* Style Works for both Editor and Frontend
+*/
+
+.wp-block-esab-accordion {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	.esab__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&.esab__head_reverse {
+			flex-direction: row-reverse;
+			.esab__heading_txt {
+				margin-left: 0.5em;
+				margin-right: 0;
+			}
+		}
+
+		.esab__heading_txt {
+			width: 100%;
+			margin-right: 0.5em;
+			margin-left: 0;
+		}
+	}
+
+	.esab__heading_tag {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.esab__head {
+		cursor: pointer;
+	}
+
+	.esab__icon {
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		line-height: 40px;
+		position: relative;
+		cursor: pointer;
+	}
+
+	.esab__icon {
+		.esab__collapse,
+		.esab__expand {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.esab__expand {
+			display: none;
+		}
+		&.esab__active_icon {
+			.esab__collapse {
+				display: none;
+			}
+			.esab__expand {
+				display: block;
+			}
+		}
+	}
+
+	.esab__body {
+		display: none;
+		&.esab__active {
+			display: block;
+		}
+	}
+}

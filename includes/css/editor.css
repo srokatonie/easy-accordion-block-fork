@@ -1,0 +1,91 @@
+/* Editor Style */
+
+p.esab__label {
+	line-height: 1.5;
+	margin-bottom: 1em !important;
+}
+
+span.components-base-control__label {
+	margin-bottom: 0 !important;
+}
+
+.esab__tabs p.components-base-control__help {
+	font-style: italic !important;
+}
+
+.esab__tabs .components-tab-panel__tabs {
+	justify-content: space-around;
+	align-items: center;
+}
+
+.esab__tab {
+	width: 100%;
+	justify-content: center;
+	border-top: 1px solid #e0e0e0;
+}
+
+.esab__tab:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.esab__tab.esab__middle {
+	border-left: 1px solid #e0e0e0;
+	border-right: 1px solid #e0e0e0;
+}
+
+.esab__tab.active_tab {
+	border-top: 2px solid #3fa796;
+	color: #3fa796;
+	background: #f0fffd;
+}
+
+/* Tag Selection */
+.esab__tabs .components-button-group .components-button {
+	padding: 6px 10px !important;
+}
+
+/* Icons Panel */
+.esab__icons_panel .components-button-group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.esab__icons_panel .components-button-group .components-button {
+	width: 15%;
+	text-align: center;
+	line-height: 100%;
+	margin: 5px;
+}
+
+/* Inputs Group */
+.esab_input__controls {
+	display: flex;
+	align-items: center;
+}
+
+.esab_input__controls .components-input-control {
+	border-radius: 0 !important;
+	align-items: center !important;
+}
+
+.esab_input__controls .components-input-control:nth-child(2) {
+	margin: 0 -1px !important;
+}
+
+.esab_input__controls .components-input-control:nth-child(3) {
+	margin-right: -1px !important;
+}
+
+.esab_input__controls .components-input-control__label {
+	padding-top: 5px !important;
+	display: block;
+	font-size: 12px;
+	color: #757575 !important;
+}
+
+.esab_input__controls .components-input-control__input {
+	text-align: center !important;
+}
