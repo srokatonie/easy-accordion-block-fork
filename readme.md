@@ -1,4 +1,4 @@
-## Easy Accordion-FAQs Gutenberg Block
+# Easy Accordion-FAQs Gutenberg Block
 
 Easy Accordion or FAQs is a custom Gutenberg Block developed with Gutenberg Native Components. It is simple
 plugin that includes a custom block named **Easy Accordion**. Simply drag and drop the block to start building your
@@ -7,23 +7,23 @@ comes with a number of customization options that allow you to customize the def
 
 [![GPLv2 or Later License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 
-### Installation
+## Installation
 
 It is a WordPress plugin, so simply install and activate this as a WordPress plugin.
 
-### Acknowledgements
+## Acknowledgements
 
 -   [Gutenberg Developer Handbook](https://developer.wordpress.org/block-editor/)
 -   [Block Plugin Checker](https://wordpress.org/plugins/developers/block-plugin-validator/)
 -   [WordPress Components](https://wordpress.github.io/gutenberg/)
 
-### Authors
+## Authors
 
 This plugin is designed and developed by Zakaria Binsaifullah - [@zakariabinsaifullah](https://www.github.com/zakariabinsaifullah)
 
 -   Founder of [MakeGutenBlock](https://makegutenblock.com)
 
-### Deployment
+## Deployment
 
 To start development, you have first install **NPM**. To install **NPM**, run the following code
 
@@ -43,7 +43,7 @@ For production, run the following command-
 npm run build
 ```
 
-### 🚀 About Me
+## 🚀 About Me
 
 I am a Javascript and WordPress developer having 5+ years of Experience in different fields of Web development. From
 the last 3 years, I am focused on **Minimal WordPress Theme** development and developing **Custom Gutenberg Blocks** with **Gutenberg Native Components**.
