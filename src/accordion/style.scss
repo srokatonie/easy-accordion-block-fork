@@ -6,6 +6,17 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	.wp-block-esab-accordion-child {
+		&.bs__one {
+			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+		}
+		&.bs__two {
+			box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+		}
+		&.bs__three {
+			box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+		}
+	}
 	.esab__head {
 		display: flex;
 		align-items: center;

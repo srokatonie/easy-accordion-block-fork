@@ -1,3 +1,11 @@
+/* Demo Panel */
+a#esab-template-library {
+	background: #3fa796;
+	color: #fff;
+	margin: 0 5px;
+	min-width: fit-content;
+}
+
 /* Editor Style */
 
 p.esab__label {
@@ -63,12 +71,13 @@ span.components-base-control__label {
 /* Inputs Group */
 .esab_input__controls {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .esab_input__controls .components-input-control {
 	border-radius: 0 !important;
 	align-items: center !important;
+	width: 25%;
 }
 
 .esab_input__controls .components-input-control:nth-child(2) {
@@ -88,4 +97,27 @@ span.components-base-control__label {
 
 .esab_input__controls .components-input-control__input {
 	text-align: center !important;
+}
+
+/* Input Linked Button */
+.linked_settings {
+	height: 100%;
+	display: block;
+	background: #fff;
+	border: 1px solid #757576;
+	padding: 4px;
+	margin-left: -1px;
+	width: 20%;
+	cursor: pointer;
+	text-align: center;
+}
+
+.linked_settings span.dashicons {
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.linked_settings.active {
+	background: #757576;
+	color: #fff;
 }

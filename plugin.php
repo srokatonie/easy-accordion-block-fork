@@ -77,12 +77,42 @@ final class ESAB_BLOCKS_CLASS {
 		register_block_type( __DIR__ . '/build/' . $name, $options );
 	 }
 
+	 /**
+	  * Render Inline CSS
+	  */
+	public function esab_render_inline_css( $handle, $css ) {
+		// register inline style
+		wp_register_style( $handle, false );
+		// enqueue inline style
+		wp_enqueue_style( $handle );
+
+		wp_add_inline_style( $handle, $css );
+	}
+
 	/**
 	 * Blocks Initialization
 	*/
 	public function esab_blocks_init() {
 		// register single block
-		$this->esab_register_block( 'accordion' );
+		$this->esab_register_block( 'accordion', array(
+			'render_callback' => [ $this, 'esab_render_accordion_block' ],
+		));
+	}
+
+	/**
+	 * Render Callback function
+	 */
+	public function esab_render_accordion_block( $attributes, $content ) {
+		$handle = $attributes['uniqueId'];
+		$custom_css = '';
+		$custom_css .= '.'.$attributes['uniqueId'].' { z-index: '.$attributes['zindex'].'; }';
+		// single accordion
+		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child { border-radius: '.$attributes['accordionBorderRadius'].'px; }';
+		//icon
+		$custom_css .= '.'.$attributes['uniqueId'].' .esab__collapse svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['iconColor'].'; }';
+		$custom_css .= '.'.$attributes['uniqueId'].' .esab__expand svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['iconColor'].'; }';
+		$this->esab_render_inline_css( $handle, $custom_css );
+		return $content;
 	}
 
 	/**
@@ -108,6 +138,8 @@ final class ESAB_BLOCKS_CLASS {
 		// Editor CSS
 		if( is_admin() ) {
 			wp_enqueue_style( 'esab-editor-css', ESAB_LIB_URL . 'css/editor.css', array(), ESAB_VERSION );
+			// admin js
+			// wp_enqueue_script( 'esab-admin-js', ESAB_LIB_URL . 'js/admin.js', array( 'jquery', 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ), ESAB_VERSION, true );
 		}
 		// enqueue JS
 		wp_enqueue_script( 'esab-lib', ESAB_LIB_URL . 'js/accordion.js', array('jquery'), ESAB_VERSION, true );

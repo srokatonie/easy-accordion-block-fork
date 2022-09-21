@@ -44,10 +44,9 @@ registerBlockType('esab/accordion-child', {
 		'esab/accordionBorderWidth',
 		'esab/accordionBorderColor',
 		'esab/accordionBorderStyle',
+		'esab/enableBoxShadow',
+		'esab/boxShadowPalette',
 		'esab/headingTag',
-		'esab/collapsedIcon',
-		'esab/expandedIcon',
-		'esab/iconPosition',
 		'esab/headerSeparator',
 		'esab/headerSeparatorColor',
 		'esab/headerSeparatorHeight',
@@ -56,6 +55,11 @@ registerBlockType('esab/accordion-child', {
 		'esab/headerBottomPadding',
 		'esab/headerLeftPadding',
 		'esab/headerRightPadding',
+		'esab/enableLinkedHeaderPadding',
+		'esab/linkedHeaderPadding',
+		'esab/collapsedIcon',
+		'esab/expandedIcon',
+		'esab/iconPosition',
 	],
 	icon: {
 		src: (
@@ -98,21 +102,19 @@ registerBlockType('esab/accordion-child', {
 			type: 'string',
 			default: 'solid',
 		},
+		enableBoxShadow: {
+			type: 'boolean',
+			default: false,
+		},
+		boxShadowPalette: {
+			type: 'string',
+			default: 'bs__one',
+		},
 		heading: {
 			type: 'string',
 		},
 		headingTag: {
 			type: 'string',
-		},
-		collapsedIcon: {
-			type: 'string',
-		},
-		expandedIcon: {
-			type: 'string',
-		},
-		iconPosition: {
-			type: 'boolean',
-			default: false,
 		},
 		headerSeparator: {
 			type: 'boolean',
@@ -131,20 +133,38 @@ registerBlockType('esab/accordion-child', {
 			default: 'solid',
 		},
 		headerTopPadding: {
-			type: 'number',
-			default: 10,
+			type: 'string',
+			default: '10',
 		},
 		headerBottomPadding: {
-			type: 'number',
-			default: 10,
+			type: 'string',
+			default: '10',
 		},
 		headerLeftPadding: {
-			type: 'number',
-			default: 10,
+			type: 'string',
+			default: '10',
 		},
 		headerRightPadding: {
-			type: 'number',
-			default: 10,
+			type: 'string',
+			default: '10',
+		},
+		enableLinkedHeaderPadding: {
+			type: 'boolean',
+			default: false,
+		},
+		linkedHeaderPadding: {
+			type: 'string',
+			default: '10',
+		},
+		collapsedIcon: {
+			type: 'string',
+		},
+		expandedIcon: {
+			type: 'string',
+		},
+		iconPosition: {
+			type: 'boolean',
+			default: false,
 		},
 	},
 	edit: ({ attributes, setAttributes, context, className }) => {
@@ -153,6 +173,8 @@ registerBlockType('esab/accordion-child', {
 			accordionBorderWidth,
 			accordionBorderColor,
 			accordionBorderStyle,
+			enableBoxShadow,
+			boxShadowPalette,
 			heading,
 			headingTag,
 			iconPosition,
@@ -166,6 +188,8 @@ registerBlockType('esab/accordion-child', {
 			headerBottomPadding,
 			headerLeftPadding,
 			headerRightPadding,
+			enableLinkedHeaderPadding,
+			linkedHeaderPadding,
 		} = attributes;
 
 		// set context values to attributes
@@ -173,6 +197,8 @@ registerBlockType('esab/accordion-child', {
 			accordionBorderWidth: context['esab/accordionBorderWidth'],
 			accordionBorderColor: context['esab/accordionBorderColor'],
 			accordionBorderStyle: context['esab/accordionBorderStyle'],
+			enableBoxShadow: context['esab/enableBoxShadow'],
+			boxShadowPalette: context['esab/boxShadowPalette'],
 			headingTag: context['esab/headingTag'],
 			iconPosition: context['esab/iconPosition'],
 			collapsedIcon: context['esab/collapsedIcon'],
@@ -185,6 +211,9 @@ registerBlockType('esab/accordion-child', {
 			headerBottomPadding: context['esab/headerBottomPadding'],
 			headerLeftPadding: context['esab/headerLeftPadding'],
 			headerRightPadding: context['esab/headerRightPadding'],
+			enableLinkedHeaderPadding:
+				context['esab/enableLinkedHeaderPadding'],
+			linkedHeaderPadding: context['esab/linkedHeaderPadding'],
 		});
 		return (
 			<Fragment>
@@ -207,7 +236,9 @@ registerBlockType('esab/accordion-child', {
 					</PanelBody>
 				</InspectorControls>
 				<div
-					className={className}
+					className={`${className} ${
+						enableBoxShadow ? boxShadowPalette : ''
+					}`}
 					style={{
 						border: `${accordionBorderWidth}px ${accordionBorderStyle} ${accordionBorderColor}`,
 					}}
@@ -217,10 +248,11 @@ registerBlockType('esab/accordion-child', {
 							iconPosition ? 'esab__head_reverse' : ''
 						}`}
 						style={{
-							paddingTop: `${headerTopPadding}px`,
-							paddingBottom: `${headerBottomPadding}px`,
-							paddingLeft: `${headerLeftPadding}px`,
-							paddingRight: `${headerRightPadding}px`,
+							padding: `${
+								enableLinkedHeaderPadding
+									? `${linkedHeaderPadding}px`
+									: `${headerTopPadding}px ${headerRightPadding}px ${headerBottomPadding}px ${headerLeftPadding}px`
+							}`,
 						}}
 					>
 						<div className="esab__heading_txt">
@@ -281,6 +313,8 @@ registerBlockType('esab/accordion-child', {
 			accordionBorderWidth,
 			accordionBorderColor,
 			accordionBorderStyle,
+			enableBoxShadow,
+			boxShadowPalette,
 			heading,
 			headingTag,
 			iconPosition,
@@ -294,10 +328,14 @@ registerBlockType('esab/accordion-child', {
 			headerBottomPadding,
 			headerLeftPadding,
 			headerRightPadding,
+			enableLinkedHeaderPadding,
+			linkedHeaderPadding,
 		} = attributes;
 		return (
 			<div
-				{...useBlockProps.save()}
+				{...useBlockProps.save({
+					className: `${enableBoxShadow ? boxShadowPalette : ''}`,
+				})}
 				style={{
 					border: `${accordionBorderWidth}px ${accordionBorderStyle} ${accordionBorderColor}`,
 				}}
@@ -307,10 +345,11 @@ registerBlockType('esab/accordion-child', {
 						iconPosition ? 'esab__head_reverse' : ''
 					}`}
 					style={{
-						paddingTop: `${headerTopPadding}px`,
-						paddingBottom: `${headerBottomPadding}px`,
-						paddingLeft: `${headerLeftPadding}px`,
-						paddingRight: `${headerRightPadding}px`,
+						padding: `${
+							enableLinkedHeaderPadding
+								? `${linkedHeaderPadding}px`
+								: `${headerTopPadding}px ${headerRightPadding}px ${headerBottomPadding}px ${headerLeftPadding}px`
+						}`,
 					}}
 				>
 					<div className="esab__heading_txt">

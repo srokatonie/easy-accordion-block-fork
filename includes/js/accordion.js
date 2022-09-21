@@ -1,14 +1,4 @@
 (function ($) {
-	// accordion
-
-	// const esabHead = $('.esab__head');
-
-	// $(esabHead).on('click', function () {
-	// 	$(this).children('.esab__icon').children('.esab__collapse').toggle();
-	// 	$(this).children('.esab__icon').children('.esab__expand').toggle();
-	// 	$(this).parent().find('.esab__body').slideToggle();
-	// });
-
 	// FAQ accordion
 	const esabAccordions = $('.wp-block-esab-accordion');
 	$(esabAccordions).each(function () {

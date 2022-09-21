@@ -1,3 +1,4 @@
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import { registerBlockType } from '@wordpress/blocks';
 import './style.scss';
 
