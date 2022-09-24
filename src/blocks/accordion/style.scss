@@ -7,6 +7,8 @@
 	flex-direction: column;
 	justify-content: space-between;
 	.wp-block-esab-accordion-child {
+		overflow: hidden;
+		box-sizing: border-box;
 		&.bs__one {
 			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 		}
@@ -76,11 +78,7 @@
 			}
 		}
 	}
-
 	.esab__body {
 		display: none;
-		&.esab__active {
-			display: block;
-		}
 	}
 }

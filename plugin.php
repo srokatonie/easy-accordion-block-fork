@@ -74,7 +74,7 @@ final class ESAB_BLOCKS_CLASS {
 	 */
 
 	public function esab_register_block( $name, $options = array() ) {
-		register_block_type( __DIR__ . '/build/' . $name, $options );
+		register_block_type( __DIR__ . '/build/blocks/' . $name, $options );
 	 }
 
 	 /**
@@ -108,9 +108,24 @@ final class ESAB_BLOCKS_CLASS {
 		$custom_css .= '.'.$attributes['uniqueId'].' { z-index: '.$attributes['zindex'].'; }';
 		// single accordion
 		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child { border-radius: '.$attributes['accordionBorderRadius'].'px; }';
+		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion {
+			border-color: '.$attributes['accordionActiveBorderColor'].' !important;
+		}';
+		// HEADER
+		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__head {
+			background: '.$attributes['headerActiveBg'].' !important;
+		}';
+		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__heading_tag{
+			color: '.$attributes['headingActiveColor'].' !important;
+		}';
+		// Body
+		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__body{
+			border-color: '.$attributes['activeSeparatorColor'].' !important;
+			background-color: '.$attributes['bodyActiveBg'].' !important;
+		}';
 		//icon
-		$custom_css .= '.'.$attributes['uniqueId'].' .esab__collapse svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['iconColor'].'; }';
-		$custom_css .= '.'.$attributes['uniqueId'].' .esab__expand svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['iconColor'].'; }';
+		$custom_css .= '.'.$attributes['uniqueId'].' .esab__collapse svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['inactiveIconColor'].'; }';
+		$custom_css .= '.'.$attributes['uniqueId'].' .esab__expand svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['activeIconColor'].'; }';
 		$this->esab_render_inline_css( $handle, $custom_css );
 		return $content;
 	}
@@ -138,8 +153,6 @@ final class ESAB_BLOCKS_CLASS {
 		// Editor CSS
 		if( is_admin() ) {
 			wp_enqueue_style( 'esab-editor-css', ESAB_LIB_URL . 'css/editor.css', array(), ESAB_VERSION );
-			// admin js
-			// wp_enqueue_script( 'esab-admin-js', ESAB_LIB_URL . 'js/admin.js', array( 'jquery', 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ), ESAB_VERSION, true );
 		}
 		// enqueue JS
 		wp_enqueue_script( 'esab-lib', ESAB_LIB_URL . 'js/accordion.js', array('jquery'), ESAB_VERSION, true );

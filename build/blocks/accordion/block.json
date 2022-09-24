@@ -27,9 +27,18 @@
     "esab/headerRightPadding": "headerRightPadding",
     "esab/enableLinkedHeaderPadding": "enableLinkedHeaderPadding",
     "esab/linkedHeaderPadding": "linkedHeaderPadding",
+    "esab/bodyTopPadding": "bodyTopPadding",
+    "esab/bodyBottomPadding": "bodyBottomPadding",
+    "esab/bodyLeftPadding": "bodyLeftPadding",
+    "esab/bodyRightPadding": "bodyRightPadding",
+    "esab/enableLinkedBodyPadding": "enableLinkedBodyPadding",
+    "esab/linkedBodyPadding": "linkedBodyPadding",
     "esab/iconPosition": "iconPosition",
     "esab/collapsedIcon": "collapsedIcon",
-    "esab/expandedIcon": "expandedIcon"
+    "esab/expandedIcon": "expandedIcon",
+    "esab/headingColor": "headingColor",
+    "esab/headerBg": "headerBg",
+    "esab/bodyBg": "bodyBg"
   },
   "attributes": {
     "uniqueId": {
@@ -71,13 +80,25 @@
       "type": "string",
       "default": "solid"
     },
+    "accordionBorderPopOver": {
+      "type": "boolean",
+      "default": false
+    },
     "accordionBorderColor": {
       "type": "string",
       "default": "#E0E0E0"
     },
+    "accordionActiveBorderPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "accordionActiveBorderColor": {
+      "type": "string",
+      "default": "#3fa796"
+    },
     "accordionBorderRadius": {
       "type": "number",
-      "default": 0
+      "default": 3
     },
     "enableBoxShadow": {
       "type": "boolean",
@@ -93,13 +114,37 @@
     },
     "headingTag": {
       "type": "string",
-      "default": "h3"
+      "default": "p"
+    },
+    "headingColorPopOver": {
+      "type": "boolean",
+      "default": false
     },
     "headingColor": {
       "type": "string"
     },
+    "headingActiveColorPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "headingActiveColor": {
+      "type": "string",
+      "default": "#3fa796"
+    },
+    "headerBgPopOver": {
+      "type": "boolean",
+      "default": false
+    },
     "headerBg": {
       "type": "string"
+    },
+    "headerActiveBgPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "headerActiveBg": {
+      "type": "string",
+      "default": "#f0fffd"
     },
     "headerTopPadding": {
       "type": "string",
@@ -127,6 +172,10 @@
     },
     "headerSeparator": {
       "type": "boolean",
+      "default": true
+    },
+    "headerSeparatorPopOver": {
+      "type": "boolean",
       "default": false
     },
     "headerSeparatorColor": {
@@ -141,12 +190,17 @@
       "type": "string",
       "default": "solid"
     },
+    "activeSeparatorPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "activeSeparatorColor": {
+      "type": "string",
+      "default": "#3fa796"
+    },
     "iconSize": {
       "type": "number",
       "default": 20
-    },
-    "iconColor": {
-      "type": "string"
     },
     "iconPosition": {
       "type": "boolean",
@@ -154,11 +208,65 @@
     },
     "collapsedIcon": {
       "type": "string",
-      "default": "esab__plus"
+      "default": "esab__circle_plus"
     },
     "expandedIcon": {
       "type": "string",
-      "default": "esab__minus"
+      "default": "esab__circle_minus"
+    },
+    "activeIconPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "activeIconColor": {
+      "type": "string",
+      "default": "#3fa796"
+    },
+    "inactiveIconPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "inactiveIconColor": {
+      "type": "string"
+    },
+    "bodyBgPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "bodyBg": {
+      "type": "string"
+    },
+    "bodyActiveBgPopOver": {
+      "type": "boolean",
+      "default": false
+    },
+    "bodyActiveBg": {
+      "type": "string",
+      "default": "#f0fffd"
+    },
+    "bodyTopPadding": {
+      "type": "string",
+      "default": "10"
+    },
+    "bodyBottomPadding": {
+      "type": "string",
+      "default": "10"
+    },
+    "bodyLeftPadding": {
+      "type": "string",
+      "default": "10"
+    },
+    "bodyRightPadding": {
+      "type": "string",
+      "default": "10"
+    },
+    "enableLinkedBodyPadding": {
+      "type": "boolean",
+      "default": false
+    },
+    "linkedBodyPadding": {
+      "type": "string",
+      "default": "10"
     },
     "zindex": {
       "type": "number"

@@ -13,16 +13,12 @@ const colors = [
 		color: '#ffffff',
 	},
 	{
-		name: __('Red', 'easy-accordion-block'),
-		color: '#ff0000',
+		name: __('Light Green', 'easy-accordion-block'),
+		color: '#F0FFFD',
 	},
 	{
 		name: __('Green', 'easy-accordion-block'),
-		color: '#00ff00',
-	},
-	{
-		name: __('Blue', 'easy-accordion-block'),
-		color: '#0000ff',
+		color: '#3FA796',
 	},
 ];
 export default colors;

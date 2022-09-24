@@ -4,7 +4,6 @@ import {
 	useBlockProps,
 	InspectorControls,
 	InnerBlocks,
-	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -29,8 +28,11 @@ import './accordion';
 // import icons
 import icons from './icons';
 
-// import custom color picker
-import EsabColorPicker from './colorpicker';
+// import color picker
+import EsabColorPicker from '../../utilities/color-picker';
+
+// tag selection
+import EsabTagSelection from '../../utilities/tags-selection';
 
 /**
  * Styled Components
@@ -44,14 +46,52 @@ z-index: ${(props) => props.zindex};
 	.wp-block-esab-accordion-child {
 		border-radius: ${(props) => props.accordionBorderRadius}px;
 	}
+	.wp-block-esab-accordion-child.esab__active_accordion {
+		border-color: ${(props) => props.activeBorderColor} !important;
+	}
+	.wp-block-esab-accordion-child.esab__active_accordion .esab__head{
+		background: ${(props) => props.headingActiveBgColor} !important;
+	}
+	.wp-block-esab-accordion-child.esab__active_accordion .esab__heading_tag{
+		color: ${(props) => props.headingActiveColor} !important;
+	}
+	.wp-block-esab-accordion-child.esab__active_accordion .esab__body{
+		border-color: ${(props) => props.activeSeparatorColor} !important;
+	}
 	.block-editor-block-list__layout {
 		row-gap: ${(props) => props.accordionsGap}px;};
 	}
 	.esab__collapse svg, .esab__expand svg {
 		width: ${(props) => props.iconSize}px;
-		fill: ${(props) => props.iconColor};
+		fill: ${(props) => props.inactiveIconColor};
+	}
+	.wp-block-esab-accordion-child.esab__active_accordion .esab__expand svg {
+		fill: ${(props) => props.activeIconColor};
+	}
+	.wp-block-esab-accordion-child.esab__active_accordion .esab__body {
+		background-color: ${(props) => props.activeBg} !important;
 	}
 `;
+
+// sides
+const esabSides = [
+	{
+		label: __('Top', 'esab'),
+		value: 'top',
+	},
+	{
+		label: __('Right', 'esab'),
+		value: 'right',
+	},
+	{
+		label: __('Bottom', 'esab'),
+		value: 'bottom',
+	},
+	{
+		label: __('Left', 'esab'),
+		value: 'left',
+	},
+];
 
 /*
  * Define the edit function
@@ -61,36 +101,49 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		uniqueId,
 		accordionsGap,
 		marginTop,
-		marginRight,
 		marginBottom,
-		marginLeft,
 		enableLinkedMargin,
 		linkedMargin,
 		accordionBorderWidth,
 		accordionBorderStyle,
+		accordionBorderPopOver,
 		accordionBorderColor,
+		accordionActiveBorderPopOver,
+		accordionActiveBorderColor,
 		accordionBorderRadius,
 		enableBoxShadow,
 		boxShadowPalette,
 		customColorsPallete,
+		headingColorPopOver,
 		headingColor,
+		headingActiveColorPopOver,
+		headingActiveColor,
+		headerBgPopOver,
 		headerBg,
-		headerTopPadding,
-		headerBottomPadding,
-		headerLeftPadding,
-		headerRightPadding,
+		headerActiveBgPopOver,
+		headerActiveBg,
 		enableLinkedHeaderPadding,
-		linkedHeaderPadding,
 		headerSeparator,
+		headerSeparatorPopOver,
 		headerSeparatorColor,
 		headerSeparatorHeight,
 		headerSeparatorStyle,
+		activeSeparatorPopOver,
+		activeSeparatorColor,
 		headingTag,
 		iconSize,
-		iconColor,
+		activeIconPopOver,
+		activeIconColor,
+		inactiveIconPopOver,
+		inactiveIconColor,
 		iconPosition,
 		collapsedIcon,
 		expandedIcon,
+		bodyBgPopOver,
+		bodyBg,
+		bodyActiveBgPopOver,
+		bodyActiveBg,
+		enableLinkedBodyPadding,
 		zindex,
 		anchorId,
 		customClass,
@@ -100,6 +153,72 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	if (!uniqueId) {
 		setAttributes({ uniqueId: `accordion-${clientId.slice(0, 8)}` });
 	}
+
+	// run loop for sides
+	const esabInputGroup = (
+		label,
+		type,
+		linkedAttributeName,
+		linkedAttributeValue,
+		linkedValue
+	) => {
+		return (
+			<div className="esab__inputs_group">
+				<p className="esab__label">{label}</p>
+				<div className="esab_input__controls">
+					{esabSides.map((side) => {
+						// set attribute pattern
+						const attributeName =
+							type === 'margin'
+								? `${type}${side.label}`
+								: `${type}${side.label}Padding`;
+						return (
+							<NumberControl
+								key={side.value}
+								label={side.label}
+								value={
+									linkedAttributeValue
+										? attributes[linkedValue]
+										: attributes[`${attributeName}`]
+								}
+								onChange={(value) => {
+									setAttributes(
+										linkedAttributeValue
+											? {
+													[linkedValue]: value,
+											  }
+											: {
+													[`${attributeName}`]: value,
+											  }
+									);
+								}}
+								labelPosition="bottom"
+							/>
+						);
+					})}
+
+					<button
+						className={`linked_settings ${
+							linkedAttributeValue ? 'active' : ''
+						}`}
+						onClick={() => {
+							setAttributes({
+								[linkedAttributeName]: !linkedAttributeValue,
+							});
+						}}
+					>
+						<Icon
+							icon={`${
+								linkedAttributeValue
+									? 'admin-links'
+									: 'editor-unlink'
+							}`}
+						/>
+					</button>
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<Fragment>
@@ -138,7 +257,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											)}
 											help={
 												__(
-													'Gap between accordions: ',
+													'Vertical Spacing: ',
 													'easy-accordion-block'
 												) + `${accordionsGap}px`
 											}
@@ -163,141 +282,16 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 										)}
 										initialOpen={false}
 									>
-										<div className="esab__inputs_group">
-											<p className="esab__label">
-												{__(
-													'Margin',
-													'easy-accordion-block'
-												)}
-											</p>
-											<div className="esab_input__controls">
-												<NumberControl
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedMargin
-																? {
-																		linkedMargin:
-																			value,
-																  }
-																: {
-																		marginTop:
-																			value,
-																  }
-														)
-													}
-													value={
-														enableLinkedMargin
-															? linkedMargin
-															: marginTop
-													}
-													min={0}
-													label={__(
-														'Top',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<NumberControl
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedMargin
-																? {
-																		linkedMargin:
-																			value,
-																  }
-																: {
-																		marginRight:
-																			value,
-																  }
-														)
-													}
-													value={
-														enableLinkedMargin
-															? linkedMargin
-															: marginRight
-													}
-													min={0}
-													label={__(
-														'Right',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<NumberControl
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedMargin
-																? {
-																		linkedMargin:
-																			value,
-																  }
-																: {
-																		marginBottom:
-																			value,
-																  }
-														)
-													}
-													value={
-														enableLinkedMargin
-															? linkedMargin
-															: marginBottom
-													}
-													min={0}
-													label={__(
-														'Bottom',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<NumberControl
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedMargin
-																? {
-																		linkedMargin:
-																			value,
-																  }
-																: {
-																		marginLeft:
-																			value,
-																  }
-														)
-													}
-													value={
-														enableLinkedMargin
-															? linkedMargin
-															: marginLeft
-													}
-													min={0}
-													label={__(
-														'Left',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<button
-													className={`linked_settings ${
-														enableLinkedMargin
-															? 'active'
-															: ''
-													}`}
-													onClick={() =>
-														setAttributes({
-															enableLinkedMargin:
-																!enableLinkedMargin,
-														})
-													}
-												>
-													<Icon
-														icon={`${
-															enableLinkedMargin
-																? 'admin-links'
-																: 'editor-unlink'
-														}`}
-													/>
-												</button>
-											</div>
-										</div>
+										{esabInputGroup(
+											__(
+												'Margin',
+												'easy-accordion-block'
+											),
+											'margin',
+											'enableLinkedMargin',
+											enableLinkedMargin,
+											'linkedMargin'
+										)}
 										<CardDivider />
 										<RangeControl
 											label={__(
@@ -430,7 +424,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 												) + `${accordionBorderRadius}px`
 											}
 											allowReset
-											resetFallbackValue={1}
+											resetFallbackValue={3}
 											step={1}
 											isShiftStepEnabled={true}
 											value={accordionBorderRadius}
@@ -451,11 +445,11 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											help={
 												enableBoxShadow
 													? __(
-															'Container Box Shadown is enabled',
+															'Container Box Shadow is enabled',
 															'easy-accordion-block'
 													  )
 													: __(
-															'Container Box Shadown is disabled',
+															'Container Box Shadow is disabled',
 															'easy-accordion-block'
 													  )
 											}
@@ -538,248 +532,29 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 										)}
 										initialOpen={false}
 									>
-										<p className="esab__label">
-											{__(
+										<EsabTagSelection
+											label={__(
 												'Select Tag',
 												'easy-accordion-block'
 											)}
-										</p>
-										<div className="esab__titles_group">
-											<ButtonGroup>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'h1',
-														})
-													}
-													isPressed={
-														headingTag === 'h1'
-													}
-												>
-													H1
-												</Button>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'h2',
-														})
-													}
-													isPressed={
-														headingTag === 'h2'
-													}
-												>
-													H2
-												</Button>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'h3',
-														})
-													}
-													isPressed={
-														headingTag === 'h3'
-													}
-												>
-													H3
-												</Button>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'h4',
-														})
-													}
-													isPressed={
-														headingTag === 'h4'
-													}
-												>
-													H4
-												</Button>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'h5',
-														})
-													}
-													isPressed={
-														headingTag === 'h5'
-													}
-												>
-													H5
-												</Button>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'h6',
-														})
-													}
-													isPressed={
-														headingTag === 'h6'
-													}
-												>
-													H6
-												</Button>
-												<Button
-													onClick={() =>
-														setAttributes({
-															headingTag: 'p',
-														})
-													}
-													isPressed={
-														headingTag === 'p'
-													}
-												>
-													P
-												</Button>
-											</ButtonGroup>
-										</div>
+											value={headingTag}
+											onClick={(value) =>
+												setAttributes({
+													headingTag: value,
+												})
+											}
+										/>
 										<CardDivider />
-										<div className="esab__inputs_group">
-											<p className="esab__label">
-												{__(
-													'Padding',
-													'easy-accordion-block'
-												)}
-											</p>
-											<div className="esab_input__controls">
-												<NumberControl
-													isShiftStepEnabled={true}
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedHeaderPadding
-																? {
-																		linkedHeaderPadding:
-																			value,
-																  }
-																: {
-																		headerTopPadding:
-																			value,
-																  }
-														)
-													}
-													shiftStep={10}
-													value={
-														enableLinkedHeaderPadding
-															? linkedHeaderPadding
-															: headerTopPadding
-													}
-													min={0}
-													required={true}
-													label={__(
-														'Top',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<NumberControl
-													isShiftStepEnabled={true}
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedHeaderPadding
-																? {
-																		linkedHeaderPadding:
-																			value,
-																  }
-																: {
-																		headerRightPadding:
-																			value,
-																  }
-														)
-													}
-													shiftStep={10}
-													value={
-														enableLinkedHeaderPadding
-															? linkedHeaderPadding
-															: headerRightPadding
-													}
-													min={0}
-													required={true}
-													label={__(
-														'Right',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<NumberControl
-													isShiftStepEnabled={true}
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedHeaderPadding
-																? {
-																		linkedHeaderPadding:
-																			value,
-																  }
-																: {
-																		headerBottomPadding:
-																			value,
-																  }
-														)
-													}
-													shiftStep={10}
-													value={
-														enableLinkedHeaderPadding
-															? linkedHeaderPadding
-															: headerBottomPadding
-													}
-													min={0}
-													required={true}
-													label={__(
-														'Bottom',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<NumberControl
-													isShiftStepEnabled={true}
-													onChange={(value) =>
-														setAttributes(
-															enableLinkedHeaderPadding
-																? {
-																		linkedHeaderPadding:
-																			value,
-																  }
-																: {
-																		headerLeftPadding:
-																			value,
-																  }
-														)
-													}
-													shiftStep={10}
-													value={
-														enableLinkedHeaderPadding
-															? linkedHeaderPadding
-															: headerLeftPadding
-													}
-													min={0}
-													required={true}
-													label={__(
-														'Left',
-														'easy-accordion-block'
-													)}
-													labelPosition="bottom"
-												/>
-												<button
-													className={`linked_settings ${
-														enableLinkedHeaderPadding
-															? 'active'
-															: ''
-													}`}
-													onClick={() =>
-														setAttributes({
-															enableLinkedHeaderPadding:
-																!enableLinkedHeaderPadding,
-														})
-													}
-												>
-													<Icon
-														icon={`${
-															enableLinkedHeaderPadding
-																? 'admin-links'
-																: 'editor-unlink'
-														}`}
-													/>
-												</button>
-											</div>
-										</div>
+										{esabInputGroup(
+											__(
+												'Padding',
+												'easy-accordion-block'
+											),
+											'header',
+											'enableLinkedHeaderPadding',
+											enableLinkedHeaderPadding,
+											'linkedHeaderPadding'
+										)}
 										<CardDivider />
 										<ToggleControl
 											label={__(
@@ -977,14 +752,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 												})
 											}
 										/>
-									</PanelBody>
-									<PanelBody
-										title={__(
-											'Expand Icon',
-											'easy-accordion-block'
-										)}
-										initialOpen={false}
-									>
+										<CardDivider />
+										<p className="esab__label">
+											{__(
+												'Active Icon',
+												'easy-accordion-block'
+											)}
+										</p>
 										<div className="esab__icons_panel">
 											<ButtonGroup>
 												{
@@ -1015,14 +789,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 												}
 											</ButtonGroup>
 										</div>
-									</PanelBody>
-									<PanelBody
-										title={__(
-											'Collapse Icon',
-											'easy-accordion-block'
-										)}
-										initialOpen={false}
-									>
+										<CardDivider />
+										<p className="esab__label">
+											{__(
+												'Inactive Icon',
+												'easy-accordion-block'
+											)}
+										</p>
 										<div className="esab__icons_panel">
 											<ButtonGroup>
 												{
@@ -1053,6 +826,24 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 												}
 											</ButtonGroup>
 										</div>
+									</PanelBody>
+									<PanelBody
+										title={__(
+											'Accordion Body',
+											'easy-accordion-block'
+										)}
+										initialOpen={false}
+									>
+										{esabInputGroup(
+											__(
+												'Padding',
+												'easy-accordion-block'
+											),
+											'body',
+											'enableLinkedBodyPadding',
+											enableLinkedBodyPadding,
+											'linkedBodyPadding'
+										)}
 									</PanelBody>
 								</Fragment>
 							);
@@ -1098,19 +889,78 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 												'easy-accordion-block'
 											)}
 											value={accordionBorderColor}
-											onChange={(newValue) =>
+											onChange={(value) =>
 												setAttributes({
-													accordionBorderColor:
-														newValue,
+													accordionBorderColor: value,
 												})
 											}
-											enableColors={customColorsPallete}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={accordionBorderPopOver}
+											setPopOver={() =>
+												setAttributes({
+													accordionBorderPopOver:
+														!accordionBorderPopOver,
+												})
+											}
+											clearable={false}
+										/>
+										<CardDivider />
+										<EsabColorPicker
+											label={__(
+												'Active Border Color',
+												'easy-accordion-block'
+											)}
+											value={accordionActiveBorderColor}
+											onChange={(value) =>
+												setAttributes({
+													accordionActiveBorderColor:
+														value,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={
+												accordionActiveBorderPopOver
+											}
+											setPopOver={() =>
+												setAttributes({
+													accordionActiveBorderPopOver:
+														!accordionActiveBorderPopOver,
+												})
+											}
+											clearable={false}
 										/>
 									</PanelBody>
 									<PanelBody
 										title={__('Accordion Head')}
 										initialOpen={false}
 									>
+										<EsabColorPicker
+											label={__(
+												'Text Color',
+												'easy-accordion-block'
+											)}
+											value={headingColor}
+											onChange={(newValue) =>
+												setAttributes({
+													headingColor: newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={headingColorPopOver}
+											setPopOver={() =>
+												setAttributes({
+													headingColorPopOver:
+														!headingColorPopOver,
+												})
+											}
+											clearable={true}
+										/>
 										<EsabColorPicker
 											label={__(
 												'Background Color',
@@ -1122,7 +972,17 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 													headerBg: newValue,
 												})
 											}
-											enableColors={customColorsPallete}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={headerBgPopOver}
+											setPopOver={() =>
+												setAttributes({
+													headerBgPopOver:
+														!headerBgPopOver,
+												})
+											}
+											clearable={true}
 										/>
 										<EsabColorPicker
 											label={__(
@@ -1136,7 +996,89 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 														newValue,
 												})
 											}
-											enableColors={customColorsPallete}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={headerSeparatorPopOver}
+											setPopOver={() =>
+												setAttributes({
+													headerSeparatorPopOver:
+														!headerSeparatorPopOver,
+												})
+											}
+											clearable={false}
+										/>
+										<CardDivider />
+										<EsabColorPicker
+											label={__(
+												'Active Text Color',
+												'easy-accordion-block'
+											)}
+											value={headingActiveColor}
+											onChange={(newValue) =>
+												setAttributes({
+													headingActiveColor:
+														newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={headingActiveColorPopOver}
+											setPopOver={() =>
+												setAttributes({
+													headingActiveColorPopOver:
+														!headingActiveColorPopOver,
+												})
+											}
+											clearable={true}
+										/>
+										<EsabColorPicker
+											label={__(
+												'Active Background Color',
+												'easy-accordion-block'
+											)}
+											value={headerActiveBg}
+											onChange={(newValue) =>
+												setAttributes({
+													headerActiveBg: newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={headerActiveBgPopOver}
+											setPopOver={() =>
+												setAttributes({
+													headerActiveBgPopOver:
+														!headerActiveBgPopOver,
+												})
+											}
+											clearable={true}
+										/>
+										<EsabColorPicker
+											label={__(
+												'Active Separator Color',
+												'easy-accordion-block'
+											)}
+											value={activeSeparatorColor}
+											onChange={(newValue) =>
+												setAttributes({
+													activeSeparatorColor:
+														newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={activeSeparatorPopOver}
+											setPopOver={() =>
+												setAttributes({
+													activeSeparatorPopOver:
+														!activeSeparatorPopOver,
+												})
+											}
+											clearable={false}
 										/>
 									</PanelBody>
 									<PanelBody
@@ -1148,16 +1090,105 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 									>
 										<EsabColorPicker
 											label={__(
-												'Color',
+												'Inactive Icon Color',
 												'easy-accordion-block'
 											)}
-											value={iconColor}
+											value={inactiveIconColor}
 											onChange={(newValue) =>
 												setAttributes({
-													iconColor: newValue,
+													inactiveIconColor: newValue,
 												})
 											}
-											enableColors={customColorsPallete}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={inactiveIconPopOver}
+											setPopOver={() =>
+												setAttributes({
+													inactiveIconPopOver:
+														!inactiveIconPopOver,
+												})
+											}
+											clearable={true}
+										/>
+										<CardDivider />
+										<EsabColorPicker
+											label={__(
+												'Active Icon Color',
+												'easy-accordion-block'
+											)}
+											value={activeIconColor}
+											onChange={(newValue) =>
+												setAttributes({
+													activeIconColor: newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={activeIconPopOver}
+											setPopOver={() =>
+												setAttributes({
+													activeIconPopOver:
+														!activeIconPopOver,
+												})
+											}
+											clearable={true}
+										/>
+									</PanelBody>
+									<PanelBody
+										title={__(
+											'Accordion Body',
+											'easy-accordion-block'
+										)}
+										initialOpen={false}
+									>
+										<EsabColorPicker
+											label={__(
+												'Background Color',
+												'easy-accordion-block'
+											)}
+											value={bodyBg}
+											onChange={(newValue) =>
+												setAttributes({
+													bodyBg: newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={bodyBgPopOver}
+											setPopOver={() =>
+												setAttributes({
+													bodyBgPopOver:
+														!bodyBgPopOver,
+												})
+											}
+											clearable={true}
+										/>
+										<CardDivider />
+										<EsabColorPicker
+											label={__(
+												'Active Background Color',
+												'easy-accordion-block'
+											)}
+											value={bodyActiveBg}
+											onChange={(newValue) =>
+												setAttributes({
+													bodyActiveBg: newValue,
+												})
+											}
+											enableCustomColors={
+												customColorsPallete
+											}
+											popOver={bodyActiveBgPopOver}
+											setPopOver={() =>
+												setAttributes({
+													bodyActiveBgPopOver:
+														!bodyActiveBgPopOver,
+												})
+											}
+											clearable={true}
 										/>
 									</PanelBody>
 								</Fragment>
@@ -1244,10 +1275,16 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 				accordionsGap={accordionsGap}
 				accordionBorderRadius={accordionBorderRadius}
 				iconSize={iconSize}
-				iconColor={iconColor}
+				inactiveIconColor={inactiveIconColor}
+				activeIconColor={activeIconColor}
 				marginTop={enableLinkedMargin ? linkedMargin : marginTop}
 				marginBottom={enableLinkedMargin ? linkedMargin : marginBottom}
 				zindex={zindex}
+				activeBorderColor={accordionActiveBorderColor}
+				headingActiveColor={headingActiveColor}
+				headingActiveBgColor={headerActiveBg}
+				activeSeparatorColor={activeSeparatorColor}
+				activeBg={bodyActiveBg}
 			>
 				<InnerBlocks
 					allowedBlocks={['esab/accordion-child']}
