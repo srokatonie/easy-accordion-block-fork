@@ -3,9 +3,11 @@
 */
 
 .wp-block-esab-accordion {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+	.esab__container {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
 	.wp-block-esab-accordion-child {
 		overflow: hidden;
 		box-sizing: border-box;

@@ -2,13 +2,19 @@
 	"apiVersion": 2,
 	"name": "esab/accordion",
 	"version": "0.1.0",
-	"title": "Easy Accordion",
+	"title": "Accordion",
 	"category": "esab-blocks",
 	"description": "Easy Accordion allows you to create an accordion or faqs section easily.",
 	"supports": {
 		"html": false,
 		"anchor": false,
 		"customClassName": false
+	},
+	"keywords": ["accordion", "faq", "accordion block"],
+	"example": {
+		"attributes": {
+			"heading": "Accordion Heading"
+		}
 	},
 	"providesContext": {
 		"esab/accordionBorderWidth": "accordionBorderWidth",

@@ -17,17 +17,21 @@ export default function save({ attributes }) {
 			{...useBlockProps.save({
 				className: `${uniqueId} ${customClass ? customClass : ''}`,
 			})}
-			style={{
-				rowGap: `${accordionsGap}px`,
-				margin: `${
-					enableLinkedMargin
-						? `${linkedMargin}px`
-						: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`
-				}`,
-			}}
 			id={anchorId ? anchorId : null}
 		>
-			<InnerBlocks.Content />
+			<div
+				className="esab__container"
+				style={{
+					rowGap: `${accordionsGap}px`,
+					margin: `${
+						enableLinkedMargin
+							? `${linkedMargin}px`
+							: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`
+					}`,
+				}}
+			>
+				<InnerBlocks.Content />
+			</div>
 		</div>
 	);
 }

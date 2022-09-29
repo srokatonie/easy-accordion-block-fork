@@ -24,6 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// require admin page
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-esab-blocks.php';
+
 /**
  * Blocks Final Class
  */

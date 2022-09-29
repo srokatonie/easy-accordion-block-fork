@@ -1,4 +1,3 @@
-/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,

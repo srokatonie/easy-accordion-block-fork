@@ -4,6 +4,8 @@
 		"prettier"
 	],
 	"rules": {
-		"no-shadow": [2, { "allow": ["done"] }]
+		"no-shadow": [2, { "allow": ["done"] }],
+		"no-console": 0,
+		"@wordpress/no-unsafe-wp-apis": 0
 	}
 }

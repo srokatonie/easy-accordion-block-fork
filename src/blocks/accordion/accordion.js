@@ -1,30 +1,12 @@
-/* eslint-disable @wordpress/no-unsafe-wp-apis */
-/* eslint-disable react/jsx-no-target-blank */
-/* eslint-disable no-undef */
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InspectorControls,
-	BlockControls,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
 	RichText,
 	InnerBlocks,
 } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	ColorPalette,
-	TextControl,
-	ToggleControl,
-	__experimentalBorderControl as BorderControl,
-	RangeControl,
-	TabPanel,
-	ToolbarGroup,
-	SelectControl,
-	ToolbarButton,
-} from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 
 const { Fragment } = wp.element;
 
