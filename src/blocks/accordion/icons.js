@@ -57,53 +57,27 @@ const icons = {
 			/>
 		</svg>
 	),
-	esab__circle_down_arrow: (
-		<svg version="1.2" viewBox="0 0 24 24" width="24" height="24">
+	esab__arrow_up: (
+		<svg
+			version="1.1"
+			id="Capa_1"
+			x="0px"
+			y="0px"
+			viewBox="0 0 47.255 47.255"
+		>
 			<path
-				fillRule="evenodd"
-				stroke="#000"
-				strokeWidth="1.5"
-				fill="none"
-				d="m12 23.3c-6.2 0-11.3-5.1-11.3-11.3 0-6.2 5.1-11.3 11.3-11.3 6.2 0 11.3 5.1 11.3 11.3 0 6.2-5.1 11.3-11.3 11.3z"
-			/>
-			<path
-				fillRule="evenodd"
-				stroke="#000"
-				strokeWidth="1.5"
-				fill="none"
-				d="m16.2 13.4l-4.2 4.2-4.2-4.2"
-			/>
-			<path
-				fillRule="evenodd"
-				stroke="#000"
-				strokeWidth="1.5"
-				fill="none"
-				d="m12 17.6v-11.2"
+				d="M46.255,35.941c-0.256,0-0.512-0.098-0.707-0.293l-21.921-21.92l-21.92,21.92c-0.391,0.391-1.023,0.391-1.414,0
+		c-0.391-0.391-0.391-1.023,0-1.414L22.92,11.607c0.391-0.391,1.023-0.391,1.414,0l22.627,22.627c0.391,0.391,0.391,1.023,0,1.414
+		C46.767,35.844,46.511,35.941,46.255,35.941z"
 			/>
 		</svg>
 	),
-	esab__circle_up_arrow: (
-		<svg version="1.2" viewBox="0 0 24 24" width="24" height="24">
+	esab__arrow_down: (
+		<svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512">
 			<path
-				fillRule="evenodd"
-				stroke="#000"
-				strokeWidth="1.5"
-				fill="none"
-				d="m12 23c-6.1 0-11-4.9-11-11 0-6.1 4.9-11 11-11 6.1 0 11 4.9 11 11 0 6.1-4.9 11-11 11z"
-			/>
-			<path
-				fillRule="evenodd"
-				stroke="#000"
-				strokeWidth="1.5"
-				fill="none"
-				d="m7.9 10.6l4.1-4.1 4.1 4.1"
-			/>
-			<path
-				fillRule="evenodd"
-				stroke="#000"
-				strokeWidth="1.5"
-				fill="none"
-				d="m12 6.5v11"
+				d="M505.752,123.582c-8.331-8.331-21.839-8.331-30.17,0L256,343.163L36.418,123.582c-8.331-8.331-21.839-8.331-30.17,0
+			s-8.331,21.839,0,30.17l234.667,234.667c8.331,8.331,21.839,8.331,30.17,0l234.667-234.667
+			C514.083,145.42,514.083,131.913,505.752,123.582z"
 			/>
 		</svg>
 	),

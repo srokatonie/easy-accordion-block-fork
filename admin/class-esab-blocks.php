@@ -19,9 +19,9 @@ class ESAB_Admin_Page {
      */
     public function esab_admin_assets($screen) {
         if( $screen === 'settings_page_esab-accordion' ){
-            wp_enqueue_style( 'esab-admin-style', ESAB_LIB_URL . 'admin/admin.css', [], ESAB_VERSION );
+            wp_enqueue_style( 'esab-admin-style', ESAB_URL . 'admin/admin.css', [], ESAB_VERSION );
             // JS
-            wp_enqueue_script( 'esab-admin-script', ESAB_LIB_URL . 'admin/admin.js', [ 'jquery' ], ESAB_VERSION, true );
+            wp_enqueue_script( 'esab-admin-script', ESAB_URL . 'admin/admin.js', [ 'jquery' ], ESAB_VERSION, true );
         }
     }
 
@@ -171,11 +171,29 @@ class ESAB_Admin_Page {
                                         <div class="change__log_body">
                                             <div class="single__log">
                                                 <div class="plugin__info">
+                                                    <span class="log__version">1.0.2</span>
+                                                    <span class="log__date">2022-10-12</span>
+                                                </div>
+                                                <div class="log__description">
+                                                    <span class="change__note info">i</span>
+                                                    <span class="description__text"><?php _e( 'Separate Admin assets in admin folder', 'easy-accordion-block' ); ?></span>
+                                                </div>
+                                                <div class="log__description">
+                                                    <span class="change__note fixing">F</span>
+                                                    <span class="description__text"><?php _e( 'Editor Width Fix', 'easy-accordion-block' ); ?></span>
+                                                </div>
+                                                <div class="log__description">
+                                                    <span class="change__note fixing">F</span>
+                                                    <span class="description__text"><?php _e( 'Replace Arrow Icons to fix color change issue', 'easy-accordion-block' ); ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="single__log">
+                                                <div class="plugin__info">
                                                     <span class="log__version">1.0.1</span>
                                                     <span class="log__date">2022-10-09</span>
                                                 </div>
                                                 <div class="log__description">
-                                                    <span class="change__note info">U</span>
+                                                    <span class="change__note update">U</span>
                                                     <span class="description__text"><?php _e( 'Redirect to admin page while activating', 'easy-accordion-block' ); ?></span>
                                                 </div>
                                             </div>

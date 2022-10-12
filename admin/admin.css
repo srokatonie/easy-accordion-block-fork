@@ -205,3 +205,7 @@ span.log__date {
 .single__log {
 	margin-bottom: 30px;
 }
+
+.log__description {
+	margin-bottom: 10px;
+}
