@@ -57,8 +57,8 @@ z-index: ${(props) => props.zindex};
 	.wp-block-esab-accordion-child.esab__active_accordion .esab__body{
 		border-color: ${(props) => props.activeSeparatorColor} !important;
 	}
-	.block-editor-block-list__layout {
-		row-gap: ${(props) => props.accordionsGap}px;};
+	.wp-block-esab-accordion-child {
+		margin-bottom: ${(props) => props.accordionsGap}px;};
 	}
 	.esab__collapse svg, .esab__expand svg {
 		width: ${(props) => props.iconSize}px;
@@ -149,9 +149,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	} = attributes;
 
 	// set unique id
-	if (!uniqueId) {
-		setAttributes({ uniqueId: `accordion-${clientId.slice(0, 8)}` });
-	}
+	setAttributes({ uniqueId: `accordion-${clientId.slice(0, 8)}` });
 
 	// run loop for sides
 	const esabInputGroup = (

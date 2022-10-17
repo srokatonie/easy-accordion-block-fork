@@ -3,7 +3,7 @@ Contributors: binsaifullah
 Tags: Accordion, FAQs, Gutenberg Block, accordion block, faq block
 Requires at least: 5.7
 Tested up to: 6.0.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -63,10 +63,15 @@ Yes, it is built with Gutenberg Native Components.
 
 
 == Changelog ==
-* 1.0.1
-- Update: Redirection to the plugin page after activation
-* 1.0.0
-- Initial Release
+= 1.0.3 =
+* Fixed: Active accordion issue fixing
+* Fixed: Editor styles issue fixing
+
+= 1.0.1 =
+* Update: Redirection to the plugin page after activation
+
+= 1.0.0 =
+* Initial Release
 
 == Upgrade Notice ==
 
