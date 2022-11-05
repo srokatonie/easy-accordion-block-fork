@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name:       Easy Accordion Block
+ * Plugin Name:       Easy Accordion Gutenberg Block
  * Description:       A custom Gutenberg Block developed with Gutenberg Native Components.
  * Requires at least: 5.7
  * Requires PHP:      7.0
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Zakaria Binsaifullah
  * Author URI:        https://makegutenblock.com
  * License:           GPL-2.0-or-later
@@ -157,7 +157,7 @@ final class ESAB_BLOCKS_CLASS {
 					'title' => __( 'Easy Accordion', 'easy-accordion-block' ),
 				),
 			),
-			$categories,
+			$categories
 		);
 	}
 	
@@ -166,11 +166,13 @@ final class ESAB_BLOCKS_CLASS {
 	 */
 	public function esab_external_libraries() {
 		// Editor CSS
-		if( is_admin() ) {
+		if( is_admin() && has_block('esab/accordion') ) {
 			wp_enqueue_style( 'esab-editor-css', ESAB_LIB_URL . 'css/editor.css', array(), ESAB_VERSION );
 		}
 		// enqueue JS
-		wp_enqueue_script( 'esab-lib', ESAB_LIB_URL . 'js/accordion.js', array('jquery'), ESAB_VERSION, true );
+		if( has_block('esab/accordion') ) {
+			wp_enqueue_script( 'esab-accordion-js', ESAB_LIB_URL . 'js/accordion.js', array( 'jquery' ), ESAB_VERSION, true );
+		}
 	}
 
 }

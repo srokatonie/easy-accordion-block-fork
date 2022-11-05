@@ -39,7 +39,7 @@ import EsabTagSelection from '../../utilities/tags-selection';
 import styled from 'styled-components';
 // Accordion Container
 const AccordionContainer = styled.div`
-z-index: ${(props) => props.zindex};
+	z-index: ${(props) => props.zindex};
 	margin-top: ${(props) => props.marginTop}px !important;
 	margin-bottom: ${(props) => props.marginBottom}px !important;
 	.wp-block-esab-accordion-child {

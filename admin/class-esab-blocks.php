@@ -171,6 +171,16 @@ class ESAB_Admin_Page {
                                         <div class="change__log_body">
                                             <div class="single__log">
                                                 <div class="plugin__info">
+                                                    <span class="log__version">1.0.4</span>
+                                                    <span class="log__date">2022-11-05</span>
+                                                </div>
+                                                <div class="log__description">
+                                                    <span class="change__note feature">N</span>
+                                                    <span class="description__text"><?php _e( 'Scripts load only when the block is used', 'easy-accordion-block' ); ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="single__log">
+                                                <div class="plugin__info">
                                                     <span class="log__version">1.0.3</span>
                                                     <span class="log__date">2022-10-17</span>
                                                 </div>
