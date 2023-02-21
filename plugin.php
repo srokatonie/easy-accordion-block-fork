@@ -4,7 +4,7 @@
  * Description:       A custom Gutenberg Block developed with Gutenberg Native Components.
  * Requires at least: 5.7
  * Requires PHP:      7.0
- * Version:           1.0.4
+ * Version:           1.1.0
  * Author:            Zakaria Binsaifullah
  * Author URI:        https://makegutenblock.com
  * License:           GPL-2.0-or-later
@@ -79,7 +79,7 @@ final class ESAB_BLOCKS_CLASS {
 	 * Define the plugin constants
 	 */
 	private function esab_define_constants() {
-		define( 'ESAB_VERSION', '1.0.3' );
+		define( 'ESAB_VERSION', '1.1.0' );
 		define( 'ESAB_URL', plugin_dir_url( __FILE__ ) );
 		define( 'ESAB_LIB_URL', ESAB_URL . 'includes/' );		
 	}
@@ -120,27 +120,52 @@ final class ESAB_BLOCKS_CLASS {
 	public function esab_render_accordion_block( $attributes, $content ) {
 		$handle = $attributes['uniqueId'];
 		$custom_css = '';
-		$custom_css .= '.'.$attributes['uniqueId'].' { z-index: '.$attributes['zindex'].'; }';
+		if( ! empty($attributes['zindex'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' { z-index: '.$attributes['zindex'].'; }';
+		}
 		// single accordion
-		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child { border-radius: '.$attributes['accordionBorderRadius'].'px; }';
-		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion {
-			border-color: '.$attributes['accordionActiveBorderColor'].' !important;
-		}';
+		if(!empty($attributes['accordionBorderRadius'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child { border-radius: '.$attributes['accordionBorderRadius'].'px; }';
+		}
+
+		if(!empty($attributes['accordionActiveBorderColor'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion {
+				border-color: '.$attributes['accordionActiveBorderColor'].' !important;
+			}';
+		}
+
 		// HEADER
-		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__head {
-			background: '.$attributes['headerActiveBg'].' !important;
-		}';
-		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__heading_tag{
-			color: '.$attributes['headingActiveColor'].' !important;
-		}';
+		if(!empty($attributes['headerActiveBg'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__head {
+				background: '.$attributes['headerActiveBg'].' !important;
+			}';
+		}
+		
+		if(!empty($attributes['headingActiveColor'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__heading_tag{
+				color: '.$attributes['headingActiveColor'].' !important;
+			}';
+		}
+
 		// Body
-		$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__body{
-			border-color: '.$attributes['activeSeparatorColor'].' !important;
-			background-color: '.$attributes['bodyActiveBg'].' !important;
-		}';
+		if(!empty($attributes['activeSeparatorColor'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__body{
+				border-color: '.$attributes['activeSeparatorColor'].' !important;
+			}';
+		}
+		if(!empty($attributes['bodyActiveBg'])){
+			$custom_css .= '.'.$attributes['uniqueId'].' .wp-block-esab-accordion-child.esab__active_accordion .esab__body{
+				background-color: '.$attributes['bodyActiveBg'].' !important;
+			}';
+		}
+
 		//icon
-		$custom_css .= '.'.$attributes['uniqueId'].' .esab__collapse svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['inactiveIconColor'].'; }';
-		$custom_css .= '.'.$attributes['uniqueId'].' .esab__expand svg { width: '.$attributes['iconSize'].'px; fill: '.$attributes['activeIconColor'].'; }';
+		$inactiveIconColor = !empty($attributes['inactiveIconColor']) ? $attributes['inactiveIconColor'] : 'inherit';
+		$activeIconColor = !empty($attributes['activeIconColor']) ? $attributes['activeIconColor'] : 'inherit';
+
+		$custom_css .= '.'.$attributes['uniqueId'].' .esab__collapse svg { width: '.$attributes['iconSize'].'px; fill: '.$inactiveIconColor.'; }';
+		$custom_css .= '.'.$attributes['uniqueId'].' .esab__expand svg { width: '.$attributes['iconSize'].'px; fill: '.$activeIconColor.'; }';
+
 		$this->esab_render_inline_css( $handle, $custom_css );
 		return $content;
 	}
@@ -165,10 +190,12 @@ final class ESAB_BLOCKS_CLASS {
 	 * Enqueue Block Assets
 	 */
 	public function esab_external_libraries() {
+
 		// Editor CSS
 		if( is_admin() && has_block('esab/accordion') ) {
 			wp_enqueue_style( 'esab-editor-css', ESAB_LIB_URL . 'css/editor.css', array(), ESAB_VERSION );
 		}
+
 		// enqueue JS
 		if( has_block('esab/accordion') ) {
 			wp_enqueue_script( 'esab-accordion-js', ESAB_LIB_URL . 'js/accordion.js', array( 'jquery' ), ESAB_VERSION, true );

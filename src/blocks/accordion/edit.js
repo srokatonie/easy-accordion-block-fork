@@ -39,7 +39,7 @@ import EsabTagSelection from '../../utilities/tags-selection';
 import styled from 'styled-components';
 // Accordion Container
 const AccordionContainer = styled.div`
-	z-index: ${(props) => props.zindex};
+	${(props) => props.zindex && `z-index: ${props.zindex};`}
 	margin-top: ${(props) => props.marginTop}px !important;
 	margin-bottom: ${(props) => props.marginBottom}px !important;
 	.wp-block-esab-accordion-child {
@@ -75,19 +75,19 @@ const AccordionContainer = styled.div`
 // sides
 const esabSides = [
 	{
-		label: __('Top', 'esab'),
+		label: __('Top', 'easy-accordion-block'),
 		value: 'top',
 	},
 	{
-		label: __('Right', 'esab'),
+		label: __('Right', 'easy-accordion-block'),
 		value: 'right',
 	},
 	{
-		label: __('Bottom', 'esab'),
+		label: __('Bottom', 'easy-accordion-block'),
 		value: 'bottom',
 	},
 	{
-		label: __('Left', 'esab'),
+		label: __('Left', 'easy-accordion-block'),
 		value: 'left',
 	},
 ];
@@ -97,7 +97,7 @@ const esabSides = [
  */
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const {
-		uniqueId,
+		enableIndividualMode,
 		accordionsGap,
 		marginTop,
 		marginBottom,
@@ -246,7 +246,39 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						if (tab.name === 'esab__general') {
 							return (
 								<Fragment>
-									<PanelBody initialOpen={true} opened={true}>
+									<PanelBody>
+										<ToggleControl
+											label={__(
+												'Enable Individual Sliding Mode',
+												'easy-accordion-block'
+											)}
+											checked={enableIndividualMode}
+											onChange={() =>
+												setAttributes({
+													enableIndividualMode:
+														!enableIndividualMode,
+												})
+											}
+											help={
+												enableIndividualMode
+													? __(
+															'Open multiple accordions at a time.',
+															'easy-accordion-block'
+													  )
+													: __(
+															'Open only one accordion at a time.',
+															'easy-accordion-block'
+													  )
+											}
+										/>
+									</PanelBody>
+									<PanelBody
+										title={__(
+											'Accordions Gap',
+											'easy-accordion-block'
+										)}
+										initialOpen={false}
+									>
 										<RangeControl
 											label={__(
 												'Accordions Gap',

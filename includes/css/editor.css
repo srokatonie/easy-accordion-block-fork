@@ -1,5 +1,5 @@
 /* Demo Panel */
-a#esab-template-library {
+#esab-template-library {
 	background: #3fa796;
 	color: #fff;
 	margin: 0 5px;
@@ -7,8 +7,7 @@ a#esab-template-library {
 }
 
 /* Editor Style */
-
-p.esab__label {
+.esab__label {
 	line-height: 1.5;
 	margin-bottom: 1em !important;
 }

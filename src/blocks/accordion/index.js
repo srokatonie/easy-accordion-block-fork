@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
 import { registerBlockType } from '@wordpress/blocks';
 import './style.scss';
@@ -11,10 +12,16 @@ import Edit from './edit';
 import Save from './save';
 
 /**
+ * Deprecations
+ */
+import deprecatedV1 from './deprecated/deprecatedV1.js';
+
+/**
  * Block Registration
  */
 
 registerBlockType(metadata, {
+	deprecated: [deprecatedV1],
 	icon: {
 		src: (
 			<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

@@ -13,8 +13,5 @@
 		$(this).addClass('active');
 		tabContents.removeClass('active');
 		tab.addClass('active');
-		console.log(tabId);
 	});
-
-	// each title on click
 })(jQuery);

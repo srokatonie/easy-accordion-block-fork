@@ -2,6 +2,7 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 export default function save({ attributes }) {
 	const {
 		uniqueId,
+		enableIndividualMode,
 		accordionsGap,
 		marginTop,
 		marginRight,
@@ -18,6 +19,7 @@ export default function save({ attributes }) {
 				className: `${uniqueId} ${customClass ? customClass : ''}`,
 			})}
 			id={anchorId ? anchorId : null}
+			data-mode={enableIndividualMode ? 'individual' : 'global'}
 		>
 			<div
 				className="esab__container"

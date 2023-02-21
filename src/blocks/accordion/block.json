@@ -50,6 +50,10 @@
 		"uniqueId": {
 			"type": "string"
 		},
+		"enableIndividualMode": {
+			"type": "boolean",
+			"default": false
+		},
 		"accordionsGap": {
 			"type": "number",
 			"default": 10

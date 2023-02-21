@@ -2,8 +2,8 @@
 Contributors: binsaifullah
 Tags: Accordion, FAQs, Gutenberg Block, accordion block, faq block, faq, faqs
 Requires at least: 5.7
-Tested up to: 6.1.0
-Stable tag: 1.0.4
+Tested up to: 6.1.1
+Stable tag: 1.1.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,16 +12,16 @@ Easy Accordion Gutenberg Block is a custom Gutenberg Block developed with Gutenb
 
 == Description ==
 
-Easy Accordion Gutenberg Block is a custom Gutenberg Block developed with Gutenberg Native components to create an accordion or a FAQ section easily. You don't need to have any coding knowledge. 
+Easy Accordion Gutenberg Block is a custom Gutenberg Block developed with Gutenberg Native components to create an accordion or a FAQ section easily. You don't need to have any coding knowledge. It is fast and light-weight. It only loads scripts on the pages where the block is used. It is highly customizable. You can use it with any theme. It is compatible with any of the WordPress themes.
 
 ### Video Tutorial 
 [youtube http://www.youtube.com/watch?v=Hh3LNLpwzX4]
 
 ### Key Features
-
 * Simple, light-weight, and fast
 * **Load scripts only on the pages where the block is used**
 * **Developed with Gutenberg Native Components**
+* **Single and Multiple accordion items opened at a time**
 * Simple drag and drop using
 * **10 SVG icons for active & inactive accordion**
 * Highly Customizable
@@ -48,22 +48,25 @@ e.g.
 == Frequently Asked Questions ==
 
 = Is it responsive? =
-
 Yes, it is responsive.
 
 = Will it slow down my site? =
-
 Never, it is light-weight and never slow down your site. In addition, it only loads scripts on the pages where the block is used.
 
 = Is it built with Gutenberg Native Components? =
-
 Yes, it is built with Gutenberg Native Components.
 
+= Can I use it with any theme? =
+Yes, you can use it with any theme. It is compatible with most of the themes. I have tested it with the most popular themes.
 
 == Screenshots ==
 
 
 == Changelog ==
+= 1.1.0 =
+* Fixed: Styles related PHP errors are fixed 
+* New Feature: multiple accordion items opened at a time
+
 = 1.0.4 =
 * Fixed: Load scripts only on the pages where the block is used
 
