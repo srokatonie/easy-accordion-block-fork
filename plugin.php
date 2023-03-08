@@ -197,9 +197,33 @@ final class ESAB_BLOCKS_CLASS {
 		}
 
 		// enqueue JS
-		if( has_block('esab/accordion') ) {
+		if( has_block('esab/accordion') || $this->has_block_in_resuable('esab/accordion') ) {
 			wp_enqueue_script( 'esab-accordion-js', ESAB_LIB_URL . 'js/accordion.js', array( 'jquery' ), ESAB_VERSION, true );
 		}
+	}
+
+	/**
+	 * If we use a reusable block
+	 * has_block function won't work
+	 */
+
+	private function has_block_in_resuable($findBlockName) {
+		$post = get_post(); 
+		if (has_blocks( $post->post_content)) {
+				$blocks = parse_blocks($post->post_content);
+				for ($i=0; $i < count($blocks); $i++) { 
+					$blockName = $blocks[$i]['blockName'];
+					if ($blockName === 'core/block') {
+						if (isset($blocks[$i]['attrs']['ref'])) {
+							$blockRefPostId = $blocks[$i]['attrs']['ref'];
+							if (has_block($findBlockName, $blockRefPostId)) {
+								return true;
+							}
+						}
+					}
+				}
+		}
+		return false;
 	}
 
 }
