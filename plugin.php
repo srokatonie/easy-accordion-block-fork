@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Easy Accordion Gutenberg Block
+ * Plugin Name:       Easy Accordion Gutenberg Block (Fork)
  * Description:       A custom Gutenberg Block developed with Gutenberg Native Components.
  * Requires at least: 5.7
  * Requires PHP:      7.0
@@ -9,7 +9,7 @@
  * Author URI:        https://makegutenblock.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       easy-accordion-block
+ * Text Domain:       easy-accordion-block-fork
  *
  * @package           @wordpress/create-block 
  */
@@ -179,7 +179,7 @@ final class ESAB_BLOCKS_CLASS {
 			array(
 				array(
 					'slug'  => 'esab-blocks',
-					'title' => __( 'Easy Accordion', 'easy-accordion-block' ),
+					'title' => __( 'Easy Accordion', 'easy-accordion-block-fork' ),
 				),
 			),
 			$categories
