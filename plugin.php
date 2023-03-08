@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Easy Accordion Gutenberg Block (Fork)
+ * Plugin Name:       Easy Accordion Gutenberg Block
  * Description:       A custom Gutenberg Block developed with Gutenberg Native Components.
  * Requires at least: 5.7
  * Requires PHP:      7.0
@@ -9,7 +9,7 @@
  * Author URI:        https://makegutenblock.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       easy-accordion-block-fork
+ * Text Domain:       easy-accordion-block
  *
  * @package           @wordpress/create-block 
  */
@@ -179,7 +179,7 @@ final class ESAB_BLOCKS_CLASS {
 			array(
 				array(
 					'slug'  => 'esab-blocks',
-					'title' => __( 'Easy Accordion', 'easy-accordion-block-fork' ),
+					'title' => __( 'Easy Accordion', 'easy-accordion-block' ),
 				),
 			),
 			$categories
@@ -197,33 +197,9 @@ final class ESAB_BLOCKS_CLASS {
 		}
 
 		// enqueue JS
-		if( has_block('esab/accordion') || $this->has_block_in_resuable('esab/accordion') ) {
+		if( has_block('esab/accordion') ) {
 			wp_enqueue_script( 'esab-accordion-js', ESAB_LIB_URL . 'js/accordion.js', array( 'jquery' ), ESAB_VERSION, true );
 		}
-	}
-
-	/**
-	 * If we use a reusable block
-	 * has_block function won't work
-	 */
-
-	private function has_block_in_resuable($findBlockName) {
-		$post = get_post(); 
-		if (has_blocks( $post->post_content)) {
-				$blocks = parse_blocks($post->post_content);
-				for ($i=0; $i < count($blocks); $i++) { 
-					$blockName = $blocks[$i]['blockName'];
-					if ($blockName === 'core/block') {
-						if (isset($blocks[$i]['attrs']['ref'])) {
-							$blockRefPostId = $blocks[$i]['attrs']['ref'];
-							if (has_block($findBlockName, $blockRefPostId)) {
-								return true;
-							}
-						}
-					}
-				}
-		}
-		return false;
 	}
 
 }
