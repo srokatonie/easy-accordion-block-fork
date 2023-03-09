@@ -8,8 +8,6 @@ class ESAB_Admin_Page {
      * Constructor
      */
     public function __construct() {
-        add_action( 'admin_menu', [ $this, 'esab_admin_menu' ] );
-
         // enqueue admin assets
         add_action( 'admin_enqueue_scripts', [ $this, 'esab_admin_assets' ] );
     }
@@ -23,20 +21,6 @@ class ESAB_Admin_Page {
             // JS
             wp_enqueue_script( 'esab-admin-script', ESAB_URL . 'admin/admin.js', [ 'jquery' ], ESAB_VERSION, true );
         }
-    }
-
-    /**
-     * Add admin menu
-     */
-    public function esab_admin_menu() {
-        add_submenu_page(
-            'options-general.php',
-            __( 'Easy Accordion', 'easy-accordion-block' ),
-            __( 'Easy Accordion', 'easy-accordion-block' ),
-            'manage_options',
-            'esab-accordion',
-            [ $this, 'esab_admin_page' ]
-        );
     }
 
     /**
